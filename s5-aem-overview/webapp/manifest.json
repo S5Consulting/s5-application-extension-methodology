@@ -16,6 +16,10 @@
       "toolsId": "e55a617e-4820-4625-9004-7cd31061fd11"
     },
     "dataSources": {
+      "extensionData": {
+        "uri": "model/extensionData.json",
+        "type": "JSON"
+      },
       "mainService": {
         "uri": "/sap/opu/odata4/sap/zaemui_extuc_v4/srvd/sap/zaem_expose_extuc/0001/",
         "type": "OData",
@@ -75,6 +79,13 @@
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
           "bundleName": "s5aemoverview.i18n.i18n"
+        }
+      },
+      "ext": {
+        "type": "sap.ui.model.json.JSONModel",
+        "dataSource": "extensionData",
+        "settings": {
+          "defaultBindingMode": "OneWay"
         }
       },
       "": {

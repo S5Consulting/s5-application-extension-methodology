@@ -1,6 +1,56 @@
-<mvc:View controllerName="s5aemoverview.controller.Overview"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-    </Page>
+<mvc:View controllerName="s5aemoverview.controller.Overview"          xmlns="sap.m"
+          xmlns:mvc="sap.ui.core.mvc">
+    <HBox>
+        <VBox class="sapUiTinyMargin">
+            <List id="phase1List"
+                  headerText="Phase 1"
+                  class="phaseList"
+                  items="{
+                     path:'ext>/items',
+                     filters:[{path:'phase',operator:'EQ',value1:1}]
+                  }">
+                <CustomListItem>
+                    <GenericTile class="sapUiTinyMargin tileLayout"
+                                 header="{ext>header}"
+                                 subheader="{ext>subheader}"
+                                 press="press"
+                                 frameType="TwoByHalf"/>
+                </CustomListItem>
+            </List>
+        </VBox>
+
+        <VBox class="sapUiTinyMargin">
+            <List id="phase2List"
+                  headerText="Phase 2"
+                  items="{
+                     path:'ext>/items',
+                     filters:[{path:'phase',operator:'EQ',value1:2}]
+                  }">
+                <CustomListItem>
+                    <GenericTile class="sapUiTinyMargin tileLayout"
+                                 header="{ext>header}"
+                                 subheader="{ext>subheader}"
+                                 press="press"
+                                 frameType="TwoByHalf"/>
+                </CustomListItem>
+            </List>
+        </VBox>
+
+        <VBox class="sapUiTinyMargin">
+            <List id="phase3List"
+                  headerText="Phase 3"
+                  items="{
+                     path:'ext>/items',
+                     filters:[{path:'phase',operator:'EQ',value1:3}]
+                  }">
+                <CustomListItem>
+                    <GenericTile class="sapUiTinyMargin tileLayout"
+                                 header="{ext>header}"
+                                 subheader="{ext>subheader}"
+                                 press="press"
+                                 frameType="TwoByHalf"/>
+                </CustomListItem>
+            </List>
+        </VBox>
+    </HBox>
 </mvc:View>
