@@ -17,4 +17,4 @@ define view entity ZAEMI_EXTDOMVH
       @Search.fuzzinessThreshold: 0.8
       @Search.ranking: #HIGH
       Title as ExtensionDomainTitle
-} 
+} where Title is not initial

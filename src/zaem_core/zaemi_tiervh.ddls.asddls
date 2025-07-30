@@ -17,4 +17,4 @@ define view entity ZAEMI_TIERVH
       @Search.fuzzinessThreshold: 0.8
       @Search.ranking: #HIGH
       Title as TierTitle
-} 
+} where Title is not initial

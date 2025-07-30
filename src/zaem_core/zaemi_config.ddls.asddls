@@ -15,7 +15,8 @@ define root view entity ZAEMI_CONFIG
 {
   key id                    as Id,
       title                 as Title,
-      default_config        as DefaultConfig,
+      active                as Active,
+      version               as Version,
       @Semantics.systemDateTime.lastChangedAt: true
       last_changed_at       as LastChangedAt,
       @Semantics.systemDateTime.localInstanceLastChangedAt: true

@@ -17,4 +17,4 @@ define view entity ZAEMI_BBLOCKVH
       @Search.fuzzinessThreshold: 0.8
       @Search.ranking: #HIGH
       Title as BuildingBlockTitle
-} 
+} where Title is not initial

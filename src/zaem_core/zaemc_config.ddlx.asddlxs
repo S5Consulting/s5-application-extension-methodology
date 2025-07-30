@@ -19,57 +19,57 @@
 annotate view ZAEMC_CONFIG with
 {
 
-@UI.facet: [
-  {
-    id:       'Config',
-    purpose:  #STANDARD,
-    type:     #IDENTIFICATION_REFERENCE,
-    label:    'Application Methodology Config',
-    position: 10
-  },{
-    id:            'Tier',
-    type:          #LINEITEM_REFERENCE,
-    label:         'Tier',
-    position:      20,
-    targetElement: '_Tier'
-  },{
-    id:            'ExtensionStyle',
-    type:          #LINEITEM_REFERENCE,
-    label:         'Extension Style',
-    position:      30,
-    targetElement: '_ExtensionStyle'
-  },{
-    id:            'ExtensionDomain',
-    type:          #LINEITEM_REFERENCE,
-    label:         'Extension Domain',
-    position:      40,
-    targetElement: '_ExtensionDomain'
-  },{
-    id:            'OnStackExtensionDomain',
-    type:          #LINEITEM_REFERENCE,
-    label:         'On-Stack Extension Domain',
-    position:      50,
-    targetElement: '_OnStackExtensionDomain'
-  },{
-    id:            'BuildingBlock',
-    type:          #LINEITEM_REFERENCE,
-    label:         'Building Block',
-    position:      60,
-    targetElement: '_BuildingBlock'
-  },{
-    id:            'TechExtensionBuildingBlock',
-    type:          #LINEITEM_REFERENCE,
-    label:         'Technical Extension Building Block',
-    position:      70,
-    targetElement: '_TechExtensionBuildingBlock'
-  },{
-    id:            'Area',
-    type:          #LINEITEM_REFERENCE,
-    label:         'Area',
-    position:      80,
-    targetElement: '_Area'
-  }
-]
+  @UI.facet: [
+    {
+      id:       'Config',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Application Methodology Config',
+      position: 10
+    },{
+      id:            'Tier',
+      type:          #LINEITEM_REFERENCE,
+      label:         'Tier',
+      position:      20,
+      targetElement: '_Tier'
+    },{
+      id:            'ExtensionStyle',
+      type:          #LINEITEM_REFERENCE,
+      label:         'Extension Style',
+      position:      30,
+      targetElement: '_ExtensionStyle'
+    },{
+      id:            'ExtensionDomain',
+      type:          #LINEITEM_REFERENCE,
+      label:         'Extension Domain',
+      position:      40,
+      targetElement: '_ExtensionDomain'
+    },{
+      id:            'OnStackExtensionDomain',
+      type:          #LINEITEM_REFERENCE,
+      label:         'On-Stack Extension Domain',
+      position:      50,
+      targetElement: '_OnStackExtensionDomain'
+    },{
+      id:            'BuildingBlock',
+      type:          #LINEITEM_REFERENCE,
+      label:         'Building Block',
+      position:      60,
+      targetElement: '_BuildingBlock'
+    },{
+      id:            'TechExtensionBuildingBlock',
+      type:          #LINEITEM_REFERENCE,
+      label:         'Technical Extension Building Block',
+      position:      70,
+      targetElement: '_TechExtensionBuildingBlock'
+    },{
+      id:            'Area',
+      type:          #LINEITEM_REFERENCE,
+      label:         'Area',
+      position:      80,
+      targetElement: '_Area'
+    }
+  ]
 
 
   @UI.identification: [{ position: 1, label: 'Id' }]
@@ -84,11 +84,18 @@ annotate view ZAEMC_CONFIG with
   Title;
 
   @UI: {
-    lineItem:       [ { position: 30 }, { type: #FOR_ACTION, dataAction: 'setDefault', label: 'Set Default' } ],
-    identification: [ { position: 30 }, { type: #FOR_ACTION, dataAction: 'setDefault', label: 'Set Default' } ],
+    lineItem:       [ { position: 30 }, { type: #FOR_ACTION, dataAction: 'setActive', label: 'Set Active' } ],
+    identification: [ { position: 30 }, { type: #FOR_ACTION, dataAction: 'setActive', label: 'Set Active' } ],
     selectionField: [ { position: 30 } ]
   }
-  DefaultConfig;
+  Active;
+
+  @UI: {
+  lineItem:       [ { position: 40 }, { type: #FOR_ACTION, dataAction: 'createNewVersion', label: 'Create new version' } ],
+  identification: [ { position: 40 }, { type: #FOR_ACTION, dataAction: 'createNewVersion', label: 'Create new version' } ],
+  selectionField: [ { position: 40 } ]
+  }
+  Version;
 
   @UI.hidden: true
   LastChangedAt;

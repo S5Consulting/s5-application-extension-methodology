@@ -10,9 +10,14 @@ define root view entity ZAEMC_CONFIG
       @EndUserText.label: 'Title'
       @Search.defaultSearchElement: true
       Title,
-      @EndUserText.label: 'Default Config'
+
+      @EndUserText.label: 'Active'
       @Search.defaultSearchElement: true
-      DefaultConfig,
+      Active,
+      @EndUserText.label: 'Version'
+      @Search.defaultSearchElement: true
+      Version,
+
       LastChangedAt,
       LocalLastChangedAt,
 
@@ -21,7 +26,7 @@ define root view entity ZAEMC_CONFIG
       _ExtensionStyle             : redirected to composition child ZAEMC_EXTSTYLE,
       _OnStackExtensionDomain     : redirected to composition child ZAEMC_OSEDOM,
       _BuildingBlock              : redirected to composition child ZAEMC_BBLOCK,
-      _TechExtensionBuildingBlock : redirected to composition child ZAEMC_tebblock,
+      _TechExtensionBuildingBlock : redirected to composition child ZAEMC_TEBBLOCK,
       _Area                       : redirected to composition child ZAEMC_AREA
 
 

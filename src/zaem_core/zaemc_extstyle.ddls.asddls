@@ -25,9 +25,9 @@ define view entity ZAEMC_EXTSTYLE
       @Search.defaultSearchElement: true
       Title,
 
-      @Consumption.valueHelpDefinition: [ { 
+      @Consumption.valueHelpDefinition: [ {
       entity: { name: 'ZAEMI_TIERVH', element: 'TierId' },
-      additionalBinding: [{ localElement: 'ConfigId', element: 'ConfigId', usage: #FILTER }] 
+      additionalBinding: [{ localElement: 'ConfigId', element: 'ConfigId', usage: #FILTER }]
       } ]
       @EndUserText.label: 'Tier'
       @Search.defaultSearchElement: true

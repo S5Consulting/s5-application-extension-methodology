@@ -9,7 +9,8 @@ use etag
   use update;
   use delete;
 
-  use action setDefault;
+  use action setActive;
+  use action createNewVersion;
   use action Edit;
   use action Activate;
   use action Discard;

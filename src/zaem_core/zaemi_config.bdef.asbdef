@@ -14,9 +14,11 @@ authorization master ( global )
   delete;
 
   field ( numbering : managed, readonly ) Id;
-  field ( readonly ) DefaultConfig;
+  field ( readonly ) Active, Version;
   field ( readonly ) LastChangedAt, LocalLastChangedAt;
-  action ( features : instance ) setDefault result [1..*] $self;
+  action ( features : instance ) setActive result [1..*] $self;
+  factory action createNewVersion [1];
+  determination setVersion on save { create; }
 
   draft action ( features : instance ) Edit;
   draft action Activate optimized;
@@ -27,7 +29,7 @@ authorization master ( global )
   side effects
   {
     // Side effect for refreshing data of an root entity??? wtf
-    action setDefault affects $self;
+    action setActive affects $self;
 
   }
 
@@ -35,7 +37,8 @@ authorization master ( global )
     {
       Id                 = id;
       Title              = title;
-      DefaultConfig      = default_config;
+      Active             = active;
+      Version            = version;
       LastChangedAt      = last_changed_at;
       LocalLastChangedAt = local_last_changed_at;
     }
