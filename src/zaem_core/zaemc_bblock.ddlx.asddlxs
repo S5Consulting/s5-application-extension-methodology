@@ -1,0 +1,50 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Building Blocks',
+    typeNamePlural: 'Building Blocks',
+    title: {
+      type: #STANDARD,
+      label: 'Building Blocks',
+      value: 'Title'
+    }
+  },
+  presentationVariant: [{
+    sortOrder: [{
+      by: 'Title',
+      direction: #ASC
+    }]
+  }]
+}
+annotate view ZAEMC_BBLOCK with {
+
+
+
+  @UI.facet: [
+    {
+      id:       'BuildingBlock',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'BuildingBlocks',
+      position: 10
+    }
+  ]
+
+  @UI.identification: [{ position: 1, label: 'Id' }]
+  @UI.hidden: true
+  Id;
+
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ]
+  }
+  Title;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+  
+
+}

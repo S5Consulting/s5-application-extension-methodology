@@ -1,0 +1,12 @@
+@EndUserText.label: 'Service Definition for Configuration'
+define service ZAEM_EXPOSE_CONFIG {
+  expose ZAEMC_CONFIG   as Config;
+  expose ZAEMI_TIERVH   as TierVH;
+  expose ZAEMC_TIER     as Tier;
+  expose ZAEMC_EXTDOM   as ExtensionDomain;
+  expose ZAEMC_EXTSTYLE as ExtensionStyle;
+  expose ZAEMC_OSEDOM   as OnStackExtensionDomain;
+  expose ZAEMC_BBLOCK   as BuildingBlock;
+  expose ZAEMC_AREA     as Area;
+  expose ZAEMC_TEBBLOCK as TechExtensionBuildingBlock;
+}

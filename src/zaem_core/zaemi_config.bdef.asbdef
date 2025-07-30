@@ -1,0 +1,240 @@
+managed implementation in class zbp_aemi_config unique;
+strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+with draft;
+
+define behavior for ZAEMI_CONFIG alias Config
+persistent table zaema_config
+draft table zaemdr_config
+lock master total etag LastChangedAt
+etag master LocalLastChangedAt
+authorization master ( global )
+{
+  create;
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) DefaultConfig;
+  field ( readonly ) LastChangedAt, LocalLastChangedAt;
+  action ( features : instance ) setDefault result [1..*] $self;
+
+  draft action ( features : instance ) Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+
+  side effects
+  {
+    // Side effect for refreshing data of an root entity??? wtf
+    action setDefault affects $self;
+
+  }
+
+  mapping for zaema_config
+    {
+      Id                 = id;
+      Title              = title;
+      DefaultConfig      = default_config;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+  association _Tier { create ( features : global ); with draft; }
+  association _ExtensionDomain { create ( features : global ); with draft; }
+  association _ExtensionStyle { create ( features : global ); with draft; }
+  association _OnStackExtensionDomain { create ( features : global ); with draft; }
+  association _BuildingBlock { create ( features : global ); with draft; }
+  association _Area { create ( features : global ); with draft; }
+  association _TechExtensionBuildingBlock { create ( features : global ); with draft; }
+}
+
+define behavior for ZAEMI_TIER alias Tier
+authorization dependent
+persistent table zaema_tier
+draft table zaemdr_tier
+etag master LocalLastChangedAt
+lock dependent by _Config
+
+{
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) ConfigId, LastChangedAt, LocalLastChangedAt;
+
+  mapping for zaema_tier
+    {
+      Id                 = id;
+      ConfigId           = config_id;
+      Title              = title;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+  association _Config { with draft; }
+
+}
+
+define behavior for ZAEMI_AREA alias Area
+authorization dependent
+persistent table zaema_area
+draft table zaemdr_area
+etag master LocalLastChangedAt
+lock dependent by _Config
+
+{
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) ConfigId, LastChangedAt, LocalLastChangedAt;
+
+  mapping for zaema_area
+    {
+      Id                 = id;
+      ConfigId           = config_id;
+      Title              = title;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+  association _Config { with draft; }
+
+}
+
+define behavior for ZAEMI_BBLOCK alias BuildingBlock
+authorization dependent
+persistent table zaema_bblock
+draft table zaemdr_bblock
+etag master LocalLastChangedAt
+lock dependent by _Config
+
+{
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) ConfigId, LastChangedAt, LocalLastChangedAt;
+
+  mapping for zaema_bblock
+    {
+      Id                 = id;
+      ConfigId           = config_id;
+      Title              = title;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+  association _Config { with draft; }
+
+}
+
+define behavior for ZAEMI_EXTDOM alias ExtensionDomain
+authorization dependent
+persistent table zaema_extdom
+draft table zaemdr_extdom
+etag master LocalLastChangedAt
+lock dependent by _Config
+
+{
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) ConfigId, LastChangedAt, LocalLastChangedAt;
+
+  mapping for zaema_extdom
+    {
+      Id                 = id;
+      ConfigId           = config_id;
+      Title              = title;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+  association _Config { with draft; }
+
+}
+
+define behavior for ZAEMI_OSEDOM alias OnStackExtensionDomain
+authorization dependent
+persistent table zaema_osedom
+draft table zaemdr_osedom
+etag master LocalLastChangedAt
+lock dependent by _Config
+
+{
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) ConfigId, LastChangedAt, LocalLastChangedAt;
+
+  mapping for zaema_osedom
+    {
+      Id                 = id;
+      ConfigId           = config_id;
+      Title              = title;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+  association _Config { with draft; }
+
+}
+
+define behavior for ZAEMI_EXTSTYLE alias ExtensionStyle
+authorization dependent
+persistent table zaema_extstyle
+draft table zaemdr_extstyle
+etag master LocalLastChangedAt
+lock dependent by _Config
+
+{
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) ConfigId, LastChangedAt, LocalLastChangedAt;
+
+  mapping for zaema_extstyle
+    {
+      Id                 = id;
+      ConfigId           = config_id;
+      Title              = title;
+      TierId             = tier_id;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+  association _Config { with draft; }
+}
+
+define behavior for ZAEMI_TEBBLOCK alias TechExtensionBuildingBlock
+authorization dependent
+persistent table zaema_tebblock
+draft table zaemdr_tebblock
+etag master LocalLastChangedAt
+lock dependent by _Config
+
+{
+  update;
+  delete;
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) ConfigId, LastChangedAt, LocalLastChangedAt;
+
+  mapping for zaema_tebblock
+    {
+      Id                 = id;
+      ConfigId           = config_id;
+      Title              = title;
+      TierId             = tier_id;
+      BuildingBlockId    = building_block_id;
+      ExtensionDomainId  = extension_domain_id;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+
+  association _Config { with draft; }
+}

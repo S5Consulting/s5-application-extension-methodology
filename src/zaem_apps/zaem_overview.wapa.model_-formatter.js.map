@@ -1,0 +1,3 @@
+{"version":3,"file":"formatter.js","names":["sap","ui","define","NumberFormat","IconPool","oValueState","core","ValueState","oObjectMarkerType","m","ObjectMarkerType","oTitleLevel","TitleLevel","formatter","classFormatter","sClass"],"sources":["formatter+
+-dbg.js"],"mappings":"AAAAA,IAAIC,GAAGC,OAAO,CACb,kCACA,wBACE,SAAUC,EAAcC,GAC1B,aAGA,MAAMC,EAAcL,IAAIC,GAAGK,KAAKC,WAChC,MAAMC,EAAoBR,IAAIS,EAAEC,iBAChC,MAAMC,EAAcX,IAAIC,GAAGK,KAAKM,WAGhC,IAAIC,EAAY,CAGfC,eAAgB,SAAUC,GACzB,MAAO,uCACR,GAGD,OAAOF,CACR","i+
+gnoreList":[]}                                                                                                                                                                                                                                                 

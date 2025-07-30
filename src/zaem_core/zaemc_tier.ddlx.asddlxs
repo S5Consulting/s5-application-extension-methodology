@@ -1,0 +1,50 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Tiers',
+    typeNamePlural: 'Tiers',
+    title: {
+      type: #STANDARD,
+      label: 'Tiers',
+      value: 'Title'
+    }
+  },
+  presentationVariant: [{
+    sortOrder: [{
+      by: 'Title',
+      direction: #ASC
+    }]
+  }]
+}
+annotate view ZAEMC_TIER with {
+
+
+
+  @UI.facet: [
+    {
+      id:       'Tier',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Tiers',
+      position: 10
+    }
+  ]
+
+  @UI.identification: [{ position: 1, label: 'Id' }]
+  @UI.hidden: true
+  Id;
+
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ]
+  }
+  Title;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+  
+
+}

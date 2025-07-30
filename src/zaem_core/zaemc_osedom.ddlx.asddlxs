@@ -1,0 +1,50 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'On-Stack Extension Domains',
+    typeNamePlural: 'On-Stack Extension Domains',
+    title: {
+      type: #STANDARD,
+      label: 'On-Stack Extension Domains',
+      value: 'Title'
+    }
+  },
+  presentationVariant: [{
+    sortOrder: [{
+      by: 'Title',
+      direction: #ASC
+    }]
+  }]
+}
+annotate view ZAEMC_OSEDOM with {
+
+
+
+  @UI.facet: [
+    {
+      id:       'OnStackExtensionDomain',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'On-Stack Extension Domains',
+      position: 10
+    }
+  ]
+
+  @UI.identification: [{ position: 1, label: 'Id' }]
+  @UI.hidden: true
+  Id;
+
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ]
+  }
+  Title;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+  
+
+}

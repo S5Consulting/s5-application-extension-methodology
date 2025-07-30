@@ -1,0 +1,3 @@
+sap.ui.define(["sap/ui/core/format/NumberFormat","sap/ui/core/IconPool"],function(t,e){"use strict";const a=sap.ui.core.ValueState;const r=sap.m.ObjectMarkerType;const o=sap.ui.core.TitleLevel;var c={classFormatter:function(t){return"sapUiTinyMargin tile+
+Layout catActions"}};return c});                                                                                                                                                                                                                               
+//# sourceMappingURL=formatter.js.map                                                                                                                                                                                                                          

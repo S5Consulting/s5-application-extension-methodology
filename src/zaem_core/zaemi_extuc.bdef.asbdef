@@ -1,0 +1,28 @@
+managed implementation in class zbp_aemi_extuc unique;
+//strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+with draft;
+
+define behavior for ZAEMI_EXTUC alias ExtUseCase
+persistent table zaema_extuc
+draft table zaemdr_extuc
+lock master total etag LastChangedAt
+etag master LocalLastChangedAt
+{
+  create;
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) Id;
+  field ( readonly ) LastChangedAt, LocalLastChangedAt;
+
+  mapping for zaema_extuc
+    {
+      Id                 = id;
+      Title              = title;
+      Area               = area;
+      BusinessContext    = business_context;
+      Diagram            = diagram;
+      LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+    }
+}

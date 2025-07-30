@@ -1,0 +1,50 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Area',
+    typeNamePlural: 'Area',
+    title: {
+      type: #STANDARD,
+      label: 'Area',
+      value: 'Title'
+    }
+  },
+  presentationVariant: [{
+    sortOrder: [{
+      by: 'Title',
+      direction: #ASC
+    }]
+  }]
+}
+annotate view ZAEMC_AREA with {
+
+
+
+  @UI.facet: [
+    {
+      id:       'Area',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Area',
+      position: 10
+    }
+  ]
+
+  @UI.identification: [{ position: 1, label: 'Id' }]
+  @UI.hidden: true
+  Id;
+
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ]
+  }
+  Title;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+  
+
+}

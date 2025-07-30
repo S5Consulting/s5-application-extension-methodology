@@ -1,0 +1,67 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Tech Extension Building Block',
+    typeNamePlural: 'Tech Extension Building Block',
+    title: {
+      type: #STANDARD,
+      label: 'Tech Extension Building Block',
+      value: 'Title'
+    }
+  },
+  presentationVariant: [{
+    sortOrder: [{
+      by: 'Title',
+      direction: #ASC
+    }]
+  }]
+}
+annotate view ZAEMC_tebblock with {
+
+
+
+  @UI.facet: [
+    {
+      id:       'TechExtensionBuildingBlock',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Tech Extension Building Block',
+      position: 10
+    }
+  ]
+
+  @UI.identification: [{ position: 1, label: 'Id' }]
+  @UI.hidden: true
+  Id;
+
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ]
+  }
+  Title;
+  @UI: {
+    lineItem:       [ { position: 30 } ],
+    identification: [ { position: 30 } ]
+  }
+
+  TierId;
+    @UI: {
+    lineItem:       [ { position: 40 } ],
+    identification: [ { position: 40 } ]
+  }
+
+  ExtensionDomainId;
+    @UI: {
+    lineItem:       [ { position: 50 } ],
+    identification: [ { position: 50 } ]
+  }
+
+  BuildingBlockId;
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+  
+
+}

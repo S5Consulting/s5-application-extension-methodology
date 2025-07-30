@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service Definifiton for ExtUseCase'
+define service ZAEM_EXPOSE_EXTUC {
+  expose ZAEMC_EXTUC as ExtUseCase;
+}

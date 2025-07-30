@@ -1,0 +1,38 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: { typeName: 'Extention Use Case',
+                typeNamePlural: 'Extention Use Case',
+                title: { type: #STANDARD, label: 'Extention Use Case', value: 'Id' }  },
+                presentationVariant: [{ sortOrder: [{ by: 'Id', direction:  #ASC }] }] }
+annotate view ZAEMC_EXTUC with
+{
+  @UI.facet: [ {   id:              'ExtUseCase',
+                   purpose:         #STANDARD,
+                   type:            #IDENTIFICATION_REFERENCE,
+                   label:           'Extention Use Case',
+                   position:        10 } ]
+  @UI:{ identification: [{ position: 1, label: 'Id' }] }
+  Id;
+  @UI: {  lineItem:       [ { position: 20 } ],
+        identification: [ { position: 20 } ],
+        selectionField: [ { position: 20 } ] }
+  Title;
+  @UI: {  lineItem:       [ { position: 30 } ],
+        identification: [ { position: 30 } ],
+        selectionField: [ { position: 30 } ] }
+  Area;
+  @UI: {  lineItem:       [ { position: 40 } ],
+        identification: [ { position: 40 } ],
+        selectionField: [ { position: 40 } ] }
+  BusinessContext;
+  @UI: {  lineItem:       [ { position: 50 } ],
+        identification: [ { position: 50 } ] }
+  Diagram;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+}

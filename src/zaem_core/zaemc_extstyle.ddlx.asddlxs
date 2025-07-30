@@ -1,0 +1,63 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Extension Styles',
+    typeNamePlural: 'Extension Styles',
+    title: {
+      type: #STANDARD,
+      label: 'Extension Styles',
+      value: 'Title'
+    }
+  },
+  presentationVariant: [{
+    sortOrder: [{
+      by: 'Title',
+      direction: #ASC
+    }]
+  }]
+}
+annotate view ZAEMC_EXTSTYLE with
+{
+
+
+
+  @UI.facet: [
+    {
+      id:       'ExtensionStyle',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Extension Styles',
+      position: 10
+    }
+  ]
+
+  @UI.identification: [{ position: 1, label: 'Id' }]
+  @UI.hidden: true
+  Id;
+
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ]
+  }
+  Title;
+  @UI: {
+    lineItem:       [ { position: 30 } ],
+    identification: [ { position: 30 } ]
+  }
+
+  TierId;
+
+//  @UI: {
+//  lineItem:       [ { position: 40 } ],
+//  identification: [ { position: 40 } ]
+//  }
+//  Description;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+
+}
