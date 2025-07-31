@@ -9,9 +9,9 @@ lock master total etag LastChangedAt
 etag master LocalLastChangedAt
 authorization master ( global )
 {
-  create;
+  create ( features : global );
   update;
-  delete;
+  delete ( precheck, features : instance );
 
   field ( numbering : managed, readonly ) Id;
   field ( readonly ) Active, Version;
@@ -19,6 +19,11 @@ authorization master ( global )
   action ( features : instance ) setActive result [1..*] $self;
   factory action createNewVersion [1];
   determination setVersion on save { create; }
+
+  determine action updateRelatedAssocKeys
+  {
+    determination ( always ) setVersion;
+  }
 
   draft action ( features : instance ) Edit;
   draft action Activate optimized;

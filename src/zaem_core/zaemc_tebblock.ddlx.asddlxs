@@ -1,11 +1,11 @@
 @Metadata.layer: #CORE
 @UI: {
   headerInfo: {
-    typeName: 'Tech Extension Building Block',
-    typeNamePlural: 'Tech Extension Building Block',
+    typeName: 'Tech Extension Building Blocks',
+    typeNamePlural: 'Tech Extension Building Blocks',
     title: {
       type: #STANDARD,
-      label: 'Tech Extension Building Block',
+      label: 'Tech Extension Building Blocks',
       value: 'Title'
     }
   },
@@ -16,7 +16,7 @@
     }]
   }]
 }
-annotate view ZAEMC_tebblock with {
+annotate view ZAEMC_TEBBLOCK with {
 
 
 
@@ -25,7 +25,7 @@ annotate view ZAEMC_tebblock with {
       id:       'TechExtensionBuildingBlock',
       purpose:  #STANDARD,
       type:     #IDENTIFICATION_REFERENCE,
-      label:    'Tech Extension Building Block',
+      label:    'Tech Extension Building Blocks',
       position: 10
     }
   ]

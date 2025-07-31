@@ -11,6 +11,7 @@ use etag
 
   use action setActive;
   use action createNewVersion;
+//  use action updateRelatedAssocKeys;
   use action Edit;
   use action Activate;
   use action Discard;

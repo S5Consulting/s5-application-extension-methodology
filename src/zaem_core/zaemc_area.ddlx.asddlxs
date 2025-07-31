@@ -1,11 +1,11 @@
 @Metadata.layer: #CORE
 @UI: {
   headerInfo: {
-    typeName: 'Area',
-    typeNamePlural: 'Area',
+    typeName: 'Areas',
+    typeNamePlural: 'Areas',
     title: {
       type: #STANDARD,
-      label: 'Area',
+      label: 'Areas',
       value: 'Title'
     }
   },
@@ -25,7 +25,7 @@ annotate view ZAEMC_AREA with {
       id:       'Area',
       purpose:  #STANDARD,
       type:     #IDENTIFICATION_REFERENCE,
-      label:    'Area',
+      label:    'Areas',
       position: 10
     }
   ]

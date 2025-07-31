@@ -36,9 +36,6 @@ define view entity ZAEMC_EXTSTYLE
       TierId,
       _TierVH.TierTitle as Tier,
 
-      //      @EndUserText.label: 'Description'
-      //      Description,`
-
       LastChangedAt,
       LocalLastChangedAt,
 

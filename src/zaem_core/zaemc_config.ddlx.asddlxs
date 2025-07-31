@@ -91,8 +91,8 @@ annotate view ZAEMC_CONFIG with
   Active;
 
   @UI: {
-  lineItem:       [ { position: 40 }, { type: #FOR_ACTION, dataAction: 'createNewVersion', label: 'Create new version' } ],
-  identification: [ { position: 40 }, { type: #FOR_ACTION, dataAction: 'createNewVersion', label: 'Create new version' } ],
+  lineItem:       [ { position: 40 }, { type: #FOR_ACTION, dataAction: 'createNewVersion', label: 'Create New Version' } ],
+  identification: [ { position: 40 }, { type: #FOR_ACTION, dataAction: 'createNewVersion', label: 'Create New Version' } ],
   selectionField: [ { position: 40 } ]
   }
   Version;
