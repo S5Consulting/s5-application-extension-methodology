@@ -2,74 +2,139 @@
 
 ## Purpose
 
-## Repository Layout
+## High‑level architecture
+
 ```
-/
-├── src/                          ABAP backend (RAP artefacts, abapGit format)
-│   ├── ddls/                     CDS view entities
-│   ├── ddlx/                     CDS projection views
-│   ├── behv/                     RAP behavior definitions / implementations
-│   ├── clas/                     ABAP classes (service behavior, unit tests)
-│   ├── srvd/                     Service definitions
-│   ├── srvb/                     Service bindings
-│   └── metadata.xml              abapGit manifest
-├── s5-aem-maintain/              Fiori Elements V4 admin app (configuration UI)
-├── s5-aem-overview/              Freestyle SAPUI5 overview app (placeholder)
-└── .abapgit.xml                  abapGit repository descriptor
+ABAP RAP (src/zaem_core)
+  ├─ Tables (ZAEMA_*) + Draft tables (ZAEMDR_*)
+  ├─ CDS View Entities (ZAEMC_*) and Consumption/Projection (ZAEMI_*)
+  ├─ Behavior Definitions (managed, draft)
+  ├─ Service Definitions/Bindings (OData V4)
+  └─ Behavior Pool classes (empty for managed scenario)
+UI5
+  ├─ s5-aem-maintain  (Fiori elements V4 List Report/Object Page bound to /Config)
+  └─ s5-aem-overview  (Freestyle UI5 shell; roadmap for KPIs/tiles)
 ```
 
-## Domain Model – Maintenance Tables
+## Domain model (DB tables)
+| Table | Keys | Non-key fields |
+|---|---|---|
+| ZAEMA_AREA | `CLIENT, ID, CONFIG_ID` | `TITLE, LAST_CHANGED_AT, LOCAL_LAST_CHANGED_AT` |
+| ZAEMA_BBLOCK | `CLIENT, ID, CONFIG_ID` | `TITLE, LAST_CHANGED_AT, LOCAL_LAST_CHANGED_AT` |
+| ZAEMA_CONFIG | `CLIENT, ID` | `TITLE, ACTIVE, VERSION, LAST_CHANGED_AT, LOCAL_LAST_CHANGED_AT` |
+| ZAEMA_EXTDOM | `CLIENT, ID, CONFIG_ID` | `TITLE, LAST_CHANGED_AT, LOCAL_LAST_CHANGED_AT` |
+| ZAEMA_EXTSTYLE | `CLIENT, ID, CONFIG_ID` | `TITLE, TIER_ID, LAST_CHANGED_AT, LOCAL_LAST_CHANGED_AT` |
+| ZAEMA_EXTUC | `CLIENT, ID` | `TITLE, AREA, BUSINESS_CONTEXT, DIAGRAM, LAST_CHANGED_AT, LOCAL_LAST_CHANGED_AT` |
+| ZAEMA_OSEDOM | `CLIENT, ID, CONFIG_ID` | `TITLE, LAST_CHANGED_AT, LOCAL_LAST_CHANGED_AT` |
+| ZAEMA_TEBBLOCK | `CLIENT, ID, CONFIG_ID` | `TITLE, TIER_ID, EXTENSION_DOMAIN_ID, BUILDING_BLOCK_ID, LAST_CHANGED_AT, LOCAL_LAST_CHANGED_AT` |
+| ZAEMA_TIER | `CLIENT, ID, CONFIG_ID` | `TITLE, LAST_CHANGED_AT, LOCAL_LAST_CHANGED_AT` |
+| ZAEMDR_AREA | `MANDT, ID, CONFIGID` | `TITLE, LASTCHANGEDAT, LOCALLASTCHANGEDAT` |
+| ZAEMDR_BBLOCK | `MANDT, ID, CONFIGID` | `TITLE, LASTCHANGEDAT, LOCALLASTCHANGEDAT` |
+| ZAEMDR_CONFIG | `MANDT, ID` | `TITLE, ACTIVE, VERSION, LASTCHANGEDAT, LOCALLASTCHANGEDAT` |
+| ZAEMDR_EXTDOM | `MANDT, ID, CONFIGID` | `TITLE, LASTCHANGEDAT, LOCALLASTCHANGEDAT` |
+| ZAEMDR_EXTSTYLE | `MANDT, ID, CONFIGID` | `TITLE, TIERID, LASTCHANGEDAT, LOCALLASTCHANGEDAT` |
+| ZAEMDR_EXTUC | `MANDT, ID` | `TITLE, AREA, BUSINESSCONTEXT, DIAGRAM, LASTCHANGEDAT, LOCALLASTCHANGEDAT` |
+| ZAEMDR_OSEDOM | `MANDT, ID, CONFIGID` | `TITLE, LASTCHANGEDAT, LOCALLASTCHANGEDAT` |
+| ZAEMDR_TEBBLOCK | `MANDT, ID, CONFIGID` | `TITLE, TIERID, EXTENSIONDOMAINID, BUILDINGBLOCKID, LASTCHANGEDAT, LOCALLASTCHANGEDAT` |
+| ZAEMDR_TIER | `MANDT, ID, CONFIGID` | `TITLE, LASTCHANGEDAT, LOCALLASTCHANGEDAT` |
+Draft support is implemented via shadow tables `ZAEMDR_*`. Each active table `ZAEMA_*` has a corresponding draft table with compatible keys and draft administration columns, used by RAP DraftRoot/Node.
 
-| Entity                          | Key(s)                                   | Additional Fields      | Description                                                                 |
-|---------------------------------|-------------------------------------------|-------------------------|-----------------------------------------------------------------------------|
-| `Tier`                          | `Client`, `Id`, `ConfigId`               | `Title`                 | Logical layer of a software system (e.g. *Presentation*, *Application*, *Data*). |
-| `ExtensionStyle`               | `Client`, `Id`, `ConfigId`               | `TierId`, `Title`       | How an extension is realised **within** a tier (e.g. *UI Extension*, *New UI*, *Business Logic Extension*). |
-| `ExtensionDomain`             | `Client`, `Id`, `ConfigId`               | `Title`                 | Deployment domain of the extension (e.g. *Side‑by‑Side*, *On‑Stack*).       |
-| `OnStackExtensionDomain`      | `Client`, `Id`, `ConfigId`               | `Title`                 | Flavours of **on‑stack** extensibility (*SAP Standard*, *Key‑User*, *Developer*). |
-| `BuildingBlock`               | `Client`, `Id`, `ConfigId`               | `Title`                 | Technical building block used to implement an extension (e.g. *Freestyle SAPUI5*, *Fiori Elements*, *SAP Build Apps*). |
-| `TechnicalExtensionBuildingBlock` | `Client`, `Id`, `ConfigId`           | `TierId`, `ExtensionDomainId`, `BuildingBlockId`, `Title` | Mapping of building blocks to tiers and domains.                             |
-| `Area`                         | `Client`, `Id`, `ConfigId`               | `Title`                 | Functional area that can be extended (e.g. *Finance*, *HR*).                |
-| `Configuration`               | `Client`, `Id`                            | `Title`, `DefaultConfig`| Root entity grouping configuration entities for extensibility methodology.  |
+## CDS modeling
 
-### Relationships
+- `ZAEMC_*`: base view entities over `ZAEMA_*` tables (domain layer).
+- `ZAEMI_*`: consumption/projection views for UI exposure, including dedicated value‑help projections (`..._TIERVH`, `..._EXTDOMVH`, `..._BBLOCKVH`, and `..._COMBO_*VH`).
+- `.ddls.baseinfo` shows base sources for value‑help views include both active and draft tables (e.g. `ZAEMA_TIER`, `ZAEMDR_TIER`) to make VH work consistently while editing drafts.
 
-| From Entity                      | To Entity                      | Cardinality        | Relationship Type                  | Description                                                                 |
-|----------------------------------|--------------------------------|--------------------|------------------------------------|-----------------------------------------------------------------------------|
-| `ExtensionStyle`                | `Tier`                         | N:1                | Foreign Key (`TierId`)             | Each extension style belongs to one tier.                                   |
-| `TechnicalExtensionBuildingBlock` | `Tier`                       | N:1                | Foreign Key (`TierId`)             | Each technical mapping is assigned to a single tier.                        |
-| `TechnicalExtensionBuildingBlock` | `ExtensionDomain`           | N:1                | Foreign Key (`ExtensionDomainId`)  | Each mapping is assigned to a single extension domain.                      |
-| `TechnicalExtensionBuildingBlock` | `BuildingBlock`             | N:1                | Foreign Key (`BuildingBlockId`)    | Each mapping uses one building block.                                       |
-| `ExtensionStyle`, `TechnicalExtensionBuildingBlock`, `Area`, `BuildingBlock`, `Tier`, `ExtensionDomain`, `OnStackExtensionDomain` | `Configuration` | N:1 | Foreign Key (`ConfigId`)               | All config entities are scoped by a configuration.                          |
+## RAP behavior
 
-## Value Help Views – CDS Interface Views
+- Managed implementation with draft (empty BP classes `ZBP_AEMI_CONFIG`, `ZBP_AEMI_EXTUC`).
+- Behavior definitions exist for consumption entities (e.g. `ZAEMC_CONFIG`, `ZAEMI_EXTUC`) and are bound through OData V4 service bindings.
+- Draft administrative data is exposed via standard `I_DraftAdministrativeData` entity set.
 
-| CDS View Entity                  | Backing Table         | Key(s)                 | Label Field           | Type     | Purpose                                 |
-|----------------------------------|------------------------|------------------------|------------------------|----------|-----------------------------------------|
-| `ZAEMI_TIERVH`                   | `ZAEMA_TIER`           | `ID`, `CONFIG_ID`      | `TITLE`                | Simple   | Value help for tier.                    |
-| `ZAEMI_COMBO_TIERVH`            | `ZAEMA_TIER`           | `ID`, `CONFIG_ID`      | `TITLE`                | Combo    | Used for dropdown with config filtering.|
-| `ZAEMI_EXTDOMVH`                | `ZAEMA_EXTDOM`         | `ID`, `CONFIG_ID`      | `TITLE`                | Simple   | Value help for extension domain.        |
-| `ZAEMI_COMBO_EXTDOMVH`         | `ZAEMA_EXTDOM`         | `ID`, `CONFIG_ID`      | `TITLE`                | Combo    | Used for dropdown with config filtering.|
-| `ZAEMI_BBLOCKVH`                | `ZAEMA_BBLOCK`         | `ID`, `CONFIG_ID`      | `TITLE`                | Simple   | Value help for building block.          |
-| `ZAEMI_COMBO_BBLOCKVH`         | `ZAEMA_BBLOCK`         | `ID`, `CONFIG_ID`      | `TITLE`                | Combo    | Used for dropdown with config filtering.|
+## Services (OData V4)
 
-## ABAP RAP Backend (`src/`)
+Service Definitions/Bindings:
+- `ZAEM_EXPOSE_CONFIG` → exposes `Config`, `Tier`, `ExtentionStyle`, and value‑help entity sets.
+- `ZAEM_EXPOSE_EXTUC` → exposes use‑case entities.
 
-| Artefact Type             | Naming Pattern                      | Role                                                                 |
-|---------------------------|--------------------------------------|----------------------------------------------------------------------|
-| CDS View Entity           | `ZAEMC_<entity>.ddls.xml`            | Persistency layer (interface views, e.g. `ZAEMC_TIER`).              |
-| CDS Projection View       | `ZAEMI_<entity>.ddls.xml`            | UI/service exposure layer (e.g. `ZAEMI_TIER`).                       |
-| CDS Value Help View       | `ZAEMI_<entity>VH.ddls.xml`          | Used as value help in UI annotations.                               |
-| CDS Combo Value Help View | `ZAEMI_COMBO_<entity>VH.ddls.xml`   | Filtered value help with config scoping.                            |
-| Behavior Definition       | `ZAEMC_<entity>.bdef.xml`           | Managed RAP behavior (create/update/delete, validations).           |
-| Behavior Implementation   | `ZBP_AEMI_<entity>.clas.abap`       | ABAP logic (validations, determinations) for behavior.              |
-| Service Definition        | `ZAEM_EXPOSE_<object>.srvd.xml`     | Exposes projection views (e.g. `CONFIG`, `EXTUC`).                  |
-| Service Binding           | `ZAEMUI_<object>_V4.srvb.xml`       | OData V4 binding for Fiori/UI clients.                              |
-| Service UI Variant        | `ZAEMUI_<object>_V2_VAN.iwvb.xml`   | In-app extension variant config (for key-user extensibility).       |
-| Unit Test Class           | `ZBP_AEMI_<entity>_TEST.clas.abap`  | Unit tests (jeśli występują).                                       |
+The FE app consumes `/sap/opu/odata4/sap/zaemui_config_v4/srvd/sap/zaem_expose_config/0001/` with local metadata for mock mode.
 
-## UI5 Applications
-### `s5-aem-maintain`
-Fiori Elements **List Report – Object Page** (OData V4).
+## Value Help (VH) – how it actually works
 
-### `s5-aem-overview`
-Freestyle SAPUI5 shell (placeholder). Currently contains minimal `Component.js` and `App.view.xml`. Road‑map: KPI cards, diagram of extension strategy.
+AEM delivers two patterns:
+1) **Simple VH** views (`ZAEMI_TIERVH`, `ZAEMI_EXTDOMVH`, `ZAEMI_BBLOCKVH`) used as classic value lists.
+2) **Combo VH** views (`ZAEMI_COMBO_TIERVH`, `ZAEMI_COMBO_EXTDOMVH`, `ZAEMI_COMBO_BBLOCKVH`) that filter by current configuration or parent keys (dropdown scenarios).
+
+Key points:
+- VH CDS include both active and draft sources (`.ddls.baseinfo` lists `"FROM": ["ZAEMA_*","ZAEMDR_*"]`), which ensures lookups also return draft rows created in the current session.
+- In OData metadata the consuming fields carry `Common.ValueListReferences` pointing to F4 services (`.../srvd_f4/...`), generated by service binding. In `metadata.xml` you can see references attached to properties like `ExtentionStyleType/TierId`.
+- For draft documents the FE runtime uses DraftRoot semantics, so VH reads from the projection view which unions active and draft; write consistency is handled by RAP draft tables.
+- Typical mapping inside VH:
+  - key: technical UUIDs (`ID`, `CONFIG_ID`)
+  - text: `TITLE`
+  - filter: `CONFIG_ID` when in Combo VH
+- Result: while editing a draft of `ExtentionStyle`, dropdown for `TierId` shows tiers from both active `ZAEMA_TIER` and unsaved drafts in `ZAEMDR_TIER`, filtered by draft’s `CONFIG_ID`.
+
+## UI
+
+### s5-aem-maintain (Fiori elements V4)
+- `sap.app`: `s5aemmaintain`
+- Data source `mainService` points to the OData V4 binding and uses local metadata for mock.
+- Routing defines:
+  - `ListReport` on `/Config`
+  - `ObjectPage` on `/Config`
+- Annotations include Common/UI vocabularies and the AEM service.
+- Table layout: responsive table via `com.sap.vocabularies.UI.v1.LineItem` settings.
+
+### s5-aem-overview (Freestyle UI5)
+- Minimal shell (`App.view.xml`, `App.controller.js`) and component wiring.
+- Roadmap: KPIs/tiles bound to an aggregated model of extensions per tier/domain.
+
+## Naming conventions
+
+- Tables: `ZAEMA_*` active; `ZAEMDR_*` draft.
+- CDS domain: `ZAEMC_*` (Core view entities).
+- CDS UI/consumption: `ZAEMI_*`, including `*_VH` for value helps.
+- Behavior pools: `ZBP_AEMI_*` per consumption entity.
+- Services: `ZAEM_EXPOSE_*` (SRVD/SRVB), UI binding `ZAEMUI_*_V4`.
+
+## How to run
+
+### Backend (ABAP RAP)
+1. Import with abapGit (`.abapgit.xml`).
+2. Activate DDIC (tables/domains), CDS, BDEF.
+3. Publish service bindings (OData V4).
+
+### Frontend (UI5)
+```bash
+cd s5-aem-maintain
+npm ci
+npm start
+# app serves with local OData V4 metadata mock
+```
+```bash
+cd s5-aem-overview
+npm ci
+npm start
+```
+
+## Repository map
+
+- `.abapgit.xml` – abapGit descriptor
+- `src/zaem_core/*` – all ABAP artifacts (tables, CDS, behavior, services)
+- `s5-aem-maintain/*` – Fiori elements app for maintaining configuration
+- `s5-aem-overview/*` – freestyle app for overview
+
+## Design intent
+
+AEM is a reference for governing *where* and *how* to extend: tiers (Presentation/Application/Data), extension styles (Side‑by‑Side, On‑Stack), domains, and building blocks. The model lets you configure and visualize allowed patterns, and the FE app serves as an admin UI for these rules.
+
+## References
+
+- ABAP RAP (managed, draft): https://help.sap.com/docs/abap-cloud/abap-rap/abap-restful-application-programming-model
+- Draft handling: https://help.sap.com/docs/abap-cloud/abap-rap/draft-capability
+- OData V4 value help annotations: https://github.com/SAP/odata-vocabularies
+- Fiori elements V4: https://ui5.sap.com/#/topic/26f208a5551d4b3b924c0dca887c6f52
+- SAPUI5 OData V4 model: https://ui5.sap.com/#/topic/38a71f974d0240adb0cc53f253c5e6de
+- Clean ABAP: https://github.com/SAP/styleguides/blob/main/clean-abap/CleanABAP.md
+- SAP Application Extension Methodology Overview: https://help.sap.com/docs/sap-btp-guidance-framework/sap-application-extension-methodology/sap-application-extension-methodology-overview
