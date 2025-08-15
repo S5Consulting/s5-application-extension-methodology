@@ -1,0 +1,50 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName: 'Scenes',
+    typeNamePlural: 'Scenes',
+    title: {
+      type: #STANDARD,
+      label: 'Scenes',
+      value: 'Title'
+    }
+  },
+  presentationVariant: [{
+    sortOrder: [{
+      by: 'Title',
+      direction: #ASC
+    }]
+  }]
+}
+annotate view ZAEMC_SCENE with {
+
+
+
+  @UI.facet: [
+    {
+      id:       'Scene',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Scenes',
+      position: 10
+    }
+  ]
+
+  @UI.identification: [{ position: 1, label: 'Id' }]
+  @UI.hidden: true
+  Id;
+
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ]
+  }
+  Title;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+  
+
+}

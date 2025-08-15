@@ -1,5 +1,5 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Interface View for Extention Style'
+@EndUserText.label: 'Interface View for Extension Style'
 define view entity ZAEMI_EXTSTYLE
   as select from zaema_extstyle
   association to parent ZAEMI_CONFIG as _Config on  $projection.ConfigId = _Config.Id

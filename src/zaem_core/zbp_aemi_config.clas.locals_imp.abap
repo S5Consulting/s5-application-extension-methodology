@@ -20,7 +20,6 @@ ENDCLASS.
 CLASS lhc_config IMPLEMENTATION.
 
   METHOD get_global_authorizations.
-    " No global authorization logic implemented
   ENDMETHOD.
 
   METHOD get_instance_features.

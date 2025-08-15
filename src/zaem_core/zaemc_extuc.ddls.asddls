@@ -10,14 +10,27 @@ define root view entity ZAEMC_EXTUC
       @EndUserText.label: 'Title'
       @Search.defaultSearchElement: true
       Title,
+
+      @Consumption.valueHelpDefinition: [ {
+      entity: { name: 'ZAEMI_AREAVH', element: 'AreaId' },
+      additionalBinding: [{ localConstant: 'X', element: 'IsActive', usage: #FILTER }]
+      } ]
       @EndUserText.label: 'Area'
       @Search.defaultSearchElement: true
-      Area,
+      @UI.textArrangement: #TEXT_ONLY
+      @ObjectModel.text.element: [ 'Area' ]
+      AreaId,
+      _AreaVH.AreaTitle as Area,
+
       @EndUserText.label: 'Business Context'
       @Search.defaultSearchElement: true
       BusinessContext,
       @EndUserText.label: 'Diagram'
       Diagram,
       LastChangedAt,
-      LocalLastChangedAt
+      LocalLastChangedAt,
+
+      _Scene   : redirected to composition child ZAEMC_SCENE,
+      _ExtTask : redirected to composition child ZAEMC_EXTTASK
+
 }

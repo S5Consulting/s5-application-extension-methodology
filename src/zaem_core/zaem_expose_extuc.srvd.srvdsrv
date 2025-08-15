@@ -1,4 +1,6 @@
 @EndUserText.label: 'Service Definifiton for ExtUseCase'
 define service ZAEM_EXPOSE_EXTUC {
-  expose ZAEMC_EXTUC as ExtUseCase;
+  expose ZAEMC_EXTUC   as ExtUseCase;
+  expose ZAEMC_SCENE   as Scene;
+  expose ZAEMC_EXTTASK as ExtTask;
 }

@@ -3,10 +3,10 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <DDLS>
-    <DDLNAME>ZAEMI_EXTUC</DDLNAME>
+    <DDLNAME>ZAEMC_SCENE</DDLNAME>
     <DDLANGUAGE>E</DDLANGUAGE>
-    <DDTEXT>Interface View for Extention Use Case</DDTEXT>
-    <SOURCE_TYPE>W</SOURCE_TYPE>
+    <DDTEXT>Consumption View for Extention Domain</DDTEXT>
+    <SOURCE_TYPE>P</SOURCE_TYPE>
     <ABAP_LANGUAGE_VERSION>5</ABAP_LANGUAGE_VERSION>
    </DDLS>
   </asx:values>

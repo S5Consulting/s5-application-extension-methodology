@@ -1,32 +1,69 @@
 @Metadata.layer: #CORE
 @UI: {
-  headerInfo: { typeName: 'Extention Use Case',
-                typeNamePlural: 'Extention Use Case',
-                title: { type: #STANDARD, label: 'Extention Use Case', value: 'Id' }  },
-                presentationVariant: [{ sortOrder: [{ by: 'Id', direction:  #ASC }] }] }
+  headerInfo: {
+    typeName:        'Extention Use Case',
+    typeNamePlural:  'Extention Use Case',
+    title:           { type: #STANDARD, label: 'Extention Use Case', value: 'Title' }
+  },
+  presentationVariant: [ {
+    sortOrder: [ { by: 'Title', direction: #ASC } ]
+  } ]
+}
 annotate view ZAEMC_EXTUC with
 {
-  @UI.facet: [ {   id:              'ExtUseCase',
-                   purpose:         #STANDARD,
-                   type:            #IDENTIFICATION_REFERENCE,
-                   label:           'Extention Use Case',
-                   position:        10 } ]
-  @UI:{ identification: [{ position: 1, label: 'Id' }] }
+  @UI.facet: [
+    {
+      id:       'ExtUseCase',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Extention Use Case',
+      position: 10
+    },
+    {
+      id:            'Scene',
+      type:          #LINEITEM_REFERENCE,
+      label:         'Scene',
+      position:      20,
+      targetElement: '_Scene'
+    },
+    {
+      id:            'ExtTask',
+      type:          #LINEITEM_REFERENCE,
+      label:         'Extension Task',
+      position:      30,
+      targetElement: '_ExtTask'
+    }
+  ]
+
+  @UI: { identification: [ { position: 1, label: 'Id' } ] }
+  @UI.hidden: true
   Id;
-  @UI: {  lineItem:       [ { position: 20 } ],
-        identification: [ { position: 20 } ],
-        selectionField: [ { position: 20 } ] }
+
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ],
+    selectionField: [ { position: 20 } ]
+  }
   Title;
-  @UI: {  lineItem:       [ { position: 30 } ],
-        identification: [ { position: 30 } ],
-        selectionField: [ { position: 30 } ] }
-  Area;
-  @UI: {  lineItem:       [ { position: 40 } ],
-        identification: [ { position: 40 } ],
-        selectionField: [ { position: 40 } ] }
+
+  @UI: {
+    lineItem:       [ { position: 30 } ],
+    identification: [ { position: 30 } ],
+    selectionField: [ { position: 30 } ]
+  }
+  AreaId;
+
+  @UI: {
+    lineItem:       [ { position: 40 } ],
+    identification: [ { position: 40 } ],
+    selectionField: [ { position: 40 } ]
+  }
   BusinessContext;
-  @UI: {  lineItem:       [ { position: 50 } ],
-        identification: [ { position: 50 } ] }
+
+  @UI: {
+    lineItem:       [ { position: 50 } ],
+    identification: [ { position: 50 } ]
+  }
   Diagram;
 
   @UI.hidden: true
@@ -34,5 +71,4 @@ annotate view ZAEMC_EXTUC with
 
   @UI.hidden: true
   LocalLastChangedAt;
-
 }

@@ -1,0 +1,51 @@
+@Metadata.layer: #CORE
+@UI: {
+  headerInfo: {
+    typeName:       'Extension Task',
+    typeNamePlural: 'Extension Tasks',
+    title:          { type: #STANDARD, label: 'Extension Task', value: 'Name' }
+  },
+  presentationVariant: [ {
+    sortOrder: [ { by: 'Name', direction: #ASC } ]
+  } ]
+}
+annotate view ZAEMC_EXTTASK with
+{
+  @UI.facet: [
+    {
+      id:       'ExtTask',
+      purpose:  #STANDARD,
+      type:     #IDENTIFICATION_REFERENCE,
+      label:    'Extension Task',
+      position: 10
+    }
+  ]
+
+  @UI.identification: [ { position: 1, label: 'Id' } ]
+  @UI.hidden: true
+  Id;
+
+  @UI: {
+    lineItem:       [ { position: 20 } ],
+    identification: [ { position: 20 } ]
+  }
+  Name;
+
+  @UI: {
+  lineItem:       [ { position: 30 } ],
+  identification: [ { position: 30 } ]
+  }
+  TierId;
+  
+    @UI: {
+  lineItem:       [ { position: 40 } ],
+  identification: [ { position: 40 } ]
+  }
+  ExtensionStyleId;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+}
