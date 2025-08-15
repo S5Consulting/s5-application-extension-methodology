@@ -1,7 +1,7 @@
 {
   "_version": "1.60.0",
   "sap.app": {
-    "id": "s5aemmaintain",
+    "id": "s5aemextuc",
     "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
@@ -12,8 +12,8 @@
     "resources": "resources.json",
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
-      "version": "1.18.2",
-      "toolsId": "acbc44f4-7610-433a-9f6a-1abf408d64b3"
+      "version": "1.18.5",
+      "toolsId": "af7b534b-88dc-4bd0-8b98-69bbcba7e5c9"
     },
     "dataSources": {
       "annotation": {
@@ -24,7 +24,7 @@
         }
       },
       "mainService": {
-        "uri": "/sap/opu/odata4/sap/zaemui_config_v4/srvd/sap/zaem_expose_config/0001/",
+        "uri": "/sap/opu/odata4/sap/zaemui_extuc_v4/srvd/sap/zaem_expose_extuc/0001/",
         "type": "OData",
         "settings": {
           "annotations": [
@@ -32,20 +32,6 @@
           ],
           "localUri": "localService/mainService/metadata.xml",
           "odataVersion": "4.0"
-        }
-      }
-    },
-    "crossNavigation": {
-      "inbounds": {
-        "AppExtensionMethodology-Maintain": {
-          "semanticObject": "AppExtensionMethodology",
-          "action": "Maintain",
-          "title": "{{AppExtensionMethodology-Maintain.flpTitle}}",
-          "subTitle": "{{AppExtensionMethodology-Maintain.flpSubtitle}}",
-          "signature": {
-            "parameters": {},
-            "additionalParameters": "allowed"
-          }
         }
       }
     }
@@ -67,14 +53,9 @@
     }
   },
   "sap.ui5": {
-    "controllerExtensions": {
-      "sap.fe.templates.ListReport.ListReport": {
-        "controllerName": "s5aemmaintain.ext.ListReportExt"
-      }
-    },
     "flexEnabled": true,
     "dependencies": {
-      "minUI5Version": "1.120.0",
+      "minUI5Version": "1.120.23",
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
@@ -89,7 +70,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "s5aemmaintain.i18n.i18n"
+          "bundleName": "s5aemextuc.i18n.i18n"
         }
       },
       "": {
@@ -114,50 +95,49 @@
       "routes": [
         {
           "pattern": ":?query:",
-          "name": "ConfigList",
-          "target": "ConfigList"
+          "name": "ExtUseCaseList",
+          "target": "ExtUseCaseList"
         },
         {
-          "pattern": "Config({key}):?query:",
-          "name": "ConfigObjectPage",
-          "target": "ConfigObjectPage"
+          "pattern": "ExtUseCase({key}):?query:",
+          "name": "ExtUseCaseObjectPage",
+          "target": "ExtUseCaseObjectPage"
         }
       ],
       "targets": {
-        "ConfigList": {
+        "ExtUseCaseList": {
           "type": "Component",
-          "id": "ConfigList",
+          "id": "ExtUseCaseList",
           "name": "sap.fe.templates.ListReport",
           "options": {
             "settings": {
-              "contextPath": "/Config",
+              "contextPath": "/ExtUseCase",
               "variantManagement": "Page",
               "navigation": {
-                "Config": {
+                "ExtUseCase": {
                   "detail": {
-                    "route": "ConfigObjectPage"
+                    "route": "ExtUseCaseObjectPage"
                   }
                 }
               },
               "controlConfiguration": {
                 "@com.sap.vocabularies.UI.v1.LineItem": {
                   "tableSettings": {
-                    "type": "ResponsiveTable",
-                    "selectionMode": "Single"
+                    "type": "ResponsiveTable"
                   }
                 }
               }
             }
           }
         },
-        "ConfigObjectPage": {
+        "ExtUseCaseObjectPage": {
           "type": "Component",
-          "id": "ConfigObjectPage",
+          "id": "ExtUseCaseObjectPage",
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
               "editableHeaderContent": false,
-              "contextPath": "/Config"
+              "contextPath": "/ExtUseCase"
             }
           }
         }
